@@ -1,0 +1,38 @@
+{
+  "name": "flipcard",
+  "version": "1.0.0",
+  "description": "server application for flipcard",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ayush604141/flipcard.git"
+  },
+  "keywords": [
+    "Flipcard",
+    "Project",
+    "Server",
+    "NodeJS",
+    "ExpressJS",
+    "Nodemon",
+    "Development"
+  ],
+  "author": "Ayush Shrivastav",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ayush604141/flipcard/issues"
+  },
+  "homepage": "https://github.com/Ayush604141/flipcard#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.11.0",
+    "nodemon": "^3.1.4",
+    "sequelize": "^6.37.3"
+  }
+}
