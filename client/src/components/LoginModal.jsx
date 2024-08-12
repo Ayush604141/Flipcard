@@ -21,6 +21,9 @@ const LoginModal = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
 
+  const serverBaseUrl = import.meta.env.VITE_SERVER_BASE_URL;
+  console.log(serverBaseUrl);
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -32,14 +35,19 @@ const LoginModal = ({ isOpen, onClose }) => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/users/auth/",
-        { email }
+      const response = await axios.post(`${serverBaseUrl}/users/auth/`, {
+        email,
+      });
+      // Store more information if needed
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ email: response.data?.user?.email })
       );
-      localStorage.setItem("user", response.data?.user?.email);
       onClose();
     } catch (error) {
-      console.error("API call error:", error);
+      // Better error handling
+      setEmailError("Failed to login. Please try again.");
+      console.error(error);
     }
   };
 
@@ -56,7 +64,7 @@ const LoginModal = ({ isOpen, onClose }) => {
         <ModalHeader>Login</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <FormControl isInvalid={emailError}>
+          <FormControl isInvalid={!!emailError}>
             <FormLabel>Email Address</FormLabel>
             <Input
               type="email"
