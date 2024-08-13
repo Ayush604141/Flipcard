@@ -35,7 +35,7 @@ router.post("/new", async (req, res) => {
       });
     }
 
-    const newCard = await Flipcard.create({ question, answer, email });
+    const newCard = await Flipcard.create({ question, answer, userId: email });
 
     res.status(201).json({
       status: 201,
@@ -54,10 +54,26 @@ router.post("/new", async (req, res) => {
 // Update an existing Flipcard
 router.put("/update/:id", async (req, res) => {
   const { id } = req.params;
-  const { question, answer } = req.body;
+  const { question, answer, email } = req.body;
 
   try {
     const card = await Flipcard.findByPk(id);
+
+    if (!email) {
+      res.status(401).json({
+        status: 401,
+        error: "Invalid request.",
+        message: "Email is required.",
+      });
+    }
+
+    if (card.userId != email) {
+      res.status(401).json({
+        status: 401,
+        error: "Invalid request.",
+        message: "Unauthorized access",
+      });
+    }
 
     if (!card) {
       return res.status(404).json({
@@ -89,9 +105,26 @@ router.put("/update/:id", async (req, res) => {
 // Delete a Flipcard
 router.delete("/delete/:id", async (req, res) => {
   const { id } = req.params;
+  const { email } = req.body;
 
   try {
     const card = await Flipcard.findByPk(id);
+
+    if (!email) {
+      res.status(401).json({
+        status: 401,
+        error: "Invalid request.",
+        message: "Email is required",
+      });
+    }
+
+    if (card.userId != email) {
+      res.status(401).json({
+        status: 401,
+        error: "Invalid request.",
+        message: "Unauthorized access",
+      });
+    }
 
     if (!card) {
       return res.status(404).json({
