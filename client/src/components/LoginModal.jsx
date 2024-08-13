@@ -22,7 +22,6 @@ const LoginModal = ({ isOpen, onClose }) => {
   const [emailError, setEmailError] = useState("");
 
   const serverBaseUrl = import.meta.env.VITE_SERVER_BASE_URL;
-  console.log(serverBaseUrl);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);

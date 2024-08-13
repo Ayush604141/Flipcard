@@ -15,27 +15,11 @@ import LoginModal from "./LoginModal";
 import { useState } from "react";
 import CardModel from "./CardModel";
 
-const Links = [{ name: "Cards", href: "/" }, { name: "Add Card" }];
-
-const NavLink = ({ children }) => (
-  <Button
-    px={2}
-    py={1}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
-    }}
-  >
-    {children.name}
-  </Button>
-);
-
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [open, setOpen] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
-  const user = localStorage.getItem("user");
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -87,7 +71,18 @@ export default function Navbar() {
               Login
             </Button>
           ) : (
-            <></>
+            <Button
+              as="h1"
+              backgroundColor="lightgray"
+              cursor="pointer"
+              color="darkblue"
+              onClick={() => {
+                localStorage.removeItem("user");
+                window.location.reload();
+              }}
+            >
+              {user?.email}
+            </Button>
           )}
         </Flex>
       </Flex>
@@ -96,9 +91,24 @@ export default function Navbar() {
       {isOpen ? (
         <Box pb={4} display={{ md: "none" }}>
           <Stack as={"nav"} spacing={4}>
-            {Links.map((link) => (
-              <NavLink key={link}>{link}</NavLink>
-            ))}
+            <Button
+              px={2}
+              py={1}
+              rounded={"md"}
+              onClick={() => {
+                window.location.replace("/cards");
+              }}
+            >
+              Cards
+            </Button>
+            <Button
+              px={2}
+              py={1}
+              rounded={"md"}
+              onClick={() => setAddOpen(true)}
+            >
+              Add Cards
+            </Button>
           </Stack>
         </Box>
       ) : null}

@@ -17,7 +17,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-const CardModel = ({ isOpen, onClose, setCards }) => {
+const CardModel = ({ isOpen, onClose }) => {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [questionError, setQuestionError] = useState("");
@@ -25,16 +25,19 @@ const CardModel = ({ isOpen, onClose, setCards }) => {
 
   const handleSave = async () => {
     if (!validateFields()) return;
-
+    const serverBaseUrl = import.meta.env.VITE_SERVER_BASE_URL;
+    const user = JSON.parse(localStorage.getItem("user"))?.email;
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/cards/new/",
-        { question, answer }
-      );
+      const response = await axios.post(`${serverBaseUrl}/cards/new/`, {
+        question,
+        answer,
+        email: user,
+      });
+      console.log(response.data);
     } catch (error) {
-      console.error("API call error:", error);
+      alert(error.message);
     }
-    // Reset fields and errors after saving
+
     setQuestion("");
     setAnswer("");
     setQuestionError("");
@@ -87,7 +90,7 @@ const CardModel = ({ isOpen, onClose, setCards }) => {
               value={question}
               onChange={(e) => {
                 setQuestion(e.target.value);
-                setQuestionError(""); // Clear error when input changes
+                setQuestionError("");
               }}
               placeholder="Enter your question"
             />
@@ -101,7 +104,7 @@ const CardModel = ({ isOpen, onClose, setCards }) => {
               value={answer}
               onChange={(e) => {
                 setAnswer(e.target.value);
-                setAnswerError(""); // Clear error when input changes
+                setAnswerError("");
               }}
               placeholder="Enter the answer"
             />
@@ -124,7 +127,6 @@ const CardModel = ({ isOpen, onClose, setCards }) => {
 CardModel.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
 };
 
 export default CardModel;
