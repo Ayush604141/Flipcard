@@ -4,7 +4,7 @@ import { Flipcard } from "../models/flipcard.model.js";
 const router = Router();
 
 // Get all flashcards for a specific user
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
   const { email } = req.body;
   try {
     const cards = await Flipcard.findAll({ where: { userId: email } });
