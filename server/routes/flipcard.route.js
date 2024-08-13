@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Flipcard } from "../models/Flipcard.model.js";
+import { Flipcard } from "../models/flipcard.model.js";
 
 const router = Router();
 
