@@ -11,6 +11,7 @@ const User = sequelize.define(
       validate: {
         isEmail: true,
       },
+      primaryKey: true,
     },
   },
   { timestamps: true }

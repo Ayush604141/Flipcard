@@ -14,7 +14,7 @@ const Flipcard = sequelize.define(
       allowNull: false,
     },
     userId: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: false,
       references: {
         model: User,
@@ -24,5 +24,8 @@ const Flipcard = sequelize.define(
   },
   { timestamps: true }
 );
+
+Flipcard.belongsTo(User, { foreignKey: "userId", targetKey: "email" });
+User.hasMany(Flipcard, { foreignKey: "userId", sourceKey: "email" });
 
 export { Flipcard };
