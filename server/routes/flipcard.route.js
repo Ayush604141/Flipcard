@@ -4,9 +4,10 @@ import { Flipcard } from "../models/flipcard.model.js";
 const router = Router();
 
 // Get all flashcards for a specific user
-router.get("/:id", async (req, res) => {
+router.get("/", async (req, res) => {
+  const { email } = req.body;
   try {
-    const cards = await Flipcard.findAll({ where: { userId: req.params.id } });
+    const cards = await Flipcard.findAll({ where: { userId: email } });
     res.status(200).json({
       status: 200,
       message: "Flashcards fetched successfully",
