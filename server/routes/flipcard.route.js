@@ -24,18 +24,18 @@ router.get("/:id", async (req, res) => {
 // Create a new Flipcard
 router.post("/new", async (req, res) => {
   try {
-    const { question, answer, userId } = req.body;
+    const { question, answer, email } = req.body;
 
-    if (!question || !answer || !userId) {
+    if (!question || !answer || !email) {
       return res.status(400).json({
         status: 400,
         error: "Invalid request",
         message:
-          "Please provide all required fields: question, answer, and userId.",
+          "Please provide all required fields: question, answer, and email.",
       });
     }
 
-    const newCard = await Flipcard.create({ question, answer, userId });
+    const newCard = await Flipcard.create({ question, answer, email });
 
     res.status(201).json({
       status: 201,

@@ -14,11 +14,11 @@ const Flipcard = sequelize.define(
       allowNull: false,
     },
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.TEXT,
       allowNull: false,
       references: {
         model: User,
-        key: "id",
+        key: "email",
       },
     },
   },
