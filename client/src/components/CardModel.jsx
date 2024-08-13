@@ -28,12 +28,15 @@ const CardModel = ({ isOpen, onClose }) => {
     const serverBaseUrl = import.meta.env.VITE_SERVER_BASE_URL;
     const user = JSON.parse(localStorage.getItem("user"))?.email;
     try {
-      const response = await axios.post(`${serverBaseUrl}/cards/new/`, {
-        question,
-        answer,
-        email: user,
-      });
-      console.log(response.data);
+      await axios
+        .post(`${serverBaseUrl}/cards/new/`, {
+          question,
+          answer,
+          email: user,
+        })
+        .then(() => {
+          window.location.reload();
+        });
     } catch (error) {
       alert(error.message);
     }

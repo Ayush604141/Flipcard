@@ -9,6 +9,13 @@ import {
   Stack,
   useColorModeValue,
   CloseButton,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverHeader,
+  PopoverBody,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import LoginModal from "./LoginModal";
@@ -71,18 +78,36 @@ export default function Navbar() {
               Login
             </Button>
           ) : (
-            <Button
-              as="h1"
-              backgroundColor="lightgray"
-              cursor="pointer"
-              color="darkblue"
-              onClick={() => {
-                localStorage.removeItem("user");
-                window.location.reload();
-              }}
-            >
-              {user?.email}
-            </Button>
+            <Popover>
+              <PopoverTrigger>
+                <Button
+                  as="h1"
+                  backgroundColor="lightgray"
+                  cursor="pointer"
+                  color="darkblue"
+                >
+                  {user?.email}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverHeader>Confirmation!</PopoverHeader>
+                <PopoverBody>Are you sure you want to logout</PopoverBody>
+                <Button
+                  width={40}
+                  m={4}
+                  colorScheme="red"
+                  onClick={() => {
+                    localStorage.removeItem("user");
+                    localStorage.removeItem("cardData");
+                    window.location.reload();
+                  }}
+                >
+                  Logout
+                </Button>
+              </PopoverContent>
+            </Popover>
           )}
         </Flex>
       </Flex>

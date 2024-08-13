@@ -42,6 +42,7 @@ const LoginModal = ({ isOpen, onClose }) => {
         "user",
         JSON.stringify({ email: response.data?.user?.email })
       );
+      window.location.reload();
       onClose();
     } catch (error) {
       // Better error handling
