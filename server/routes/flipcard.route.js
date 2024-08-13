@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
     res.status(500).json({
       status: 500,
       error: "Server Error",
-      message: "Please try again later",
+      message: error.message,
     });
   }
 });
