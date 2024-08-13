@@ -1,12 +1,11 @@
-import { Box, Flex, IconButton } from "@chakra-ui/react";
+import { Box, Flex, Heading, IconButton, Image } from "@chakra-ui/react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import FlipCard from "./Flipcard";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 
+const user = JSON.parse(localStorage.getItem("user"))?.email;
 const getCards = async () => {
-  const user = JSON.parse(localStorage.getItem("user"))?.email;
-
   const response = await axios.post(
     `${import.meta.env.VITE_SERVER_BASE_URL}/cards`,
     { email: user }
@@ -64,8 +63,38 @@ const Cards = () => {
             <ArrowForwardIcon />
           </IconButton>
         </Box>
+      ) : user ? (
+        <Box
+          sx={{
+            height: "80vh",
+            width: "100%",
+            overflow: "hidden",
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            justifyContent: "center",
+            gap: "4vh",
+          }}
+        >
+          <Image src="/no_data.svg" height={240} />
+          <Heading size="lg">No Cards Found, Please add one.</Heading>
+        </Box>
       ) : (
-        <Box>No Cards Found</Box>
+        <Box
+          sx={{
+            height: "80vh",
+            width: "100%",
+            overflow: "hidden",
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            justifyContent: "center",
+            gap: "4vh",
+          }}
+        >
+          <Image src="/login.svg" height={240} />
+          <Heading size="lg">Please Login to view or add cards.</Heading>
+        </Box>
       )}
     </Flex>
   );
