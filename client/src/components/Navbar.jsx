@@ -49,20 +49,12 @@ export default function Navbar() {
                 bg: useColorModeValue("gray.200", "gray.700"),
               }}
               onClick={() => {
-                window.location.replace("/cards");
+                if (user) {
+                  setAddOpen(true);
+                } else {
+                  alert("Please login");
+                }
               }}
-            >
-              Cards
-            </Button>
-            <Button
-              px={2}
-              py={1}
-              rounded={"md"}
-              _hover={{
-                textDecoration: "none",
-                bg: useColorModeValue("gray.200", "gray.700"),
-              }}
-              onClick={() => setAddOpen(true)}
             >
               Add Cards
             </Button>
@@ -121,16 +113,12 @@ export default function Navbar() {
               py={1}
               rounded={"md"}
               onClick={() => {
-                window.location.replace("/cards");
+                if (user) {
+                  setAddOpen(true);
+                } else {
+                  alert("Please login");
+                }
               }}
-            >
-              Cards
-            </Button>
-            <Button
-              px={2}
-              py={1}
-              rounded={"md"}
-              onClick={() => setAddOpen(true)}
             >
               Add Cards
             </Button>
