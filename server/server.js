@@ -18,6 +18,10 @@ app.use(express.json());
 app.use("/api/users", userRouter);
 app.use("/api/cards", cardRouter);
 
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Hell yeah" });
+});
+
 // Start the server after syncing the database
 async function startServer() {
   try {
